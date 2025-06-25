@@ -4,18 +4,14 @@ import { infoMessages } from "@/data/responseMessages"
 import { InfoModel } from "@/model/InfoModel"
 
 export async function GET(
-  _req: Request,
-  { params }: { params: { id: string } }
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const infoId = await parseInt(params.id, 10)
-  if (isNaN(infoId)) {
-    return NextResponse.json({ error: infoMessages.invalidId }, { status: 400 })
-  }
-
+  const { id } = await params
   try {
     const [rows] = await db.query(
       "SELECT id, title, content FROM info WHERE id = ?",
-      [infoId]
+      [id]
     )
     const results = Array.isArray(rows) ? (rows as InfoModel[]) : []
 

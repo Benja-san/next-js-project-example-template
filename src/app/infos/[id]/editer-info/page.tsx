@@ -12,7 +12,8 @@ interface PageProps {
 }
 
 export default async function EditInfoPage({ params }: PageProps) {
-  const idNum = parseInt(params.id, 10)
+  const { id } = await params
+  const idNum = parseInt(id, 10)
   if (isNaN(idNum)) {
     return notFound()
   }
