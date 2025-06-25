@@ -10,8 +10,6 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const method = request.method
 
-  console.log("middleware HIT", pathname)
-
   if (API_PROTECTED_PATH.test(pathname) && method !== "GET") {
     return NextResponse.json(
       { error: "Forbidden - Only GET method allowed" },
